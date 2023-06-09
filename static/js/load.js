@@ -1,6 +1,6 @@
 // Header
 $("#nav-header").load("./templates/base/header.html #navegacao");
-$("#nav-header").load("../../templates/base/navbar.html #navegacao");
+$("#nav-navbar").load("../../templates/base/navbar.html #navegacao");
 
 // Breadcrumb
 $("#nav-breadcrumb-registros").load("../../templates/base/breadcrumb.html #breadcrumb #breadcrumb-registros");

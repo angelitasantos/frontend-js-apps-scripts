@@ -36,7 +36,7 @@
     <main class="mt-2">
 
         <form
-            action="https://script.google.com/macros/s/AKfycbyg-OH6xBQpbD3sEyCN6FZfva6MJlCR9mCrHfsB6x07dsQrEdxxqWZDtEDnWuP8C0cr/exec"
+            action="https://script.google.com/macros/s/AKfycbz7HlXUNs4ID-q52DBHP2ipC7lCDftlEGqtLFXnyn_y05rUCX1p09hJOTli1-Kg-c57eA/exec"
             method="post" class="needs-validation" novalidate>
 
             <main class="card">
@@ -52,18 +52,15 @@
                         <div class="col-sm-8">
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Parceiro</span>
-                                <input list="ListPartners" type="text" class="form-control" name="partner" required
-                                    autocomplete="off" minlength="4">
-                                <datalist id="ListPartners">
-
-                                </datalist>
+                                <input type="text" class="form-control" name="cust_nm" required autocomplete="on"
+                                    minlength="4">
                                 <div class="invalid-tooltip">
                                     Por favor, coloque um nome de parceiro válido. Mínimo 4 caracteres.
                                 </div>
                             </div>
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Endereço</span>
-                                <input type="text" class="form-control" name="address">
+                                <input type="text" class="form-control" name="addr">
                             </div>
                             <div class="row">
                                 <div class="col-sm-7">
@@ -86,10 +83,6 @@
                                 <span class="input-group-text">Número</span>
                                 <input type="text" class="form-control text-center" id="inv_no" name="inv_no"
                                     autocomplete="off" required>
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="button" onclick="SearchVendas();"><i
-                                            class="bi bi-search"></i></button>
-                                </div>
                                 <div class="invalid-tooltip">
                                     Por favor, coloque um número válido.
                                 </div>
@@ -100,11 +93,7 @@
                             </div>
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Vendedor</span>
-                                <input list="ListSellers" autocomplete="off" type="text" class="form-control"
-                                    name="seller">
-                                <datalist id="ListSellers">
-
-                                </datalist>
+                                <input type="text" class="form-control" name="seller">
                             </div>
                         </div>
 
@@ -136,12 +125,12 @@
                                 <td>
 
                                     <input type="text" class="form-control table-width-text" name="item_nm"
-                                        list="ListItems" autocomplete="off" required>
+                                        list="MyList" autocomplete="off" required>
                                     <div class="invalid-feedback">
                                         Include 1 item
                                     </div>
 
-                                    <datalist id="ListItems">
+                                    <datalist id="MyList">
 
                                     </datalist>
 
@@ -173,16 +162,16 @@
                         <div class="col-sm-4">
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Total Itens</span>
-                                <input type="text" class="form-control text-center" id="FTotal" name="ftotal" disabled>
+                                <input type="text" class="form-control text-center" id="FTotal" name="FTotal" disabled>
                             </div>
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Acrescimo</span>
-                                <input type="number" class="form-control text-right" id="FGST" name="fgst" min="0.00"
+                                <input type="number" class="form-control text-right" id="FGST" name="FGST" min="0.00"
                                     max="10000.00" step="0.01" onchange="GetTotal()">
                             </div>
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Desconto</span>
-                                <input type="number" class="form-control text-right" id="FDiscount" name="fdiscount"
+                                <input type="number" class="form-control text-right" id="FDiscount" name="FDiscount"
                                     min="0.00" max="10000.00" step="0.01" onchange="GetTotal()">
                             </div>
                         </div>
@@ -190,19 +179,15 @@
                         <div class="col-sm-4">
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Total Geral</span>
-                                <input type="text" class="form-control text-center" id="FNet" name="fnet" disabled>
+                                <input type="text" class="form-control text-center" id="FNet" name="FNet" disabled>
                             </div>
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Tipo Pgto</span>
-                                <input list="ListTypePay" autocomplete="off" type="text"
-                                    class="form-control text-center" id="TypePay" name="typepay">
-                                <datalist id="ListTypePay">
-
-                                </datalist>
+                                <input type="text" class="form-control text-center" id="TypePay" name="TypePay">
                             </div>
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Qtd Parc</span>
-                                <input type="number" class="form-control text-center" id="QtyParc" name="qtyparc"
+                                <input type="number" class="form-control text-center" id="QtyParc" name="QtyParc"
                                     min="1" step="1" value="1" required>
                             </div>
                         </div>
@@ -246,7 +231,10 @@
     </main>
 
     <script type="text/javascript" src="../../static/js/scripts-add.js"></script>
-    
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
         integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
         crossorigin="anonymous"></script>
