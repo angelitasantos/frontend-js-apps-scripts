@@ -1,14 +1,9 @@
-body {
-    overflow-x: hidden;
-    overflow-y: hidden;
-}
-
 .margin-header {
     margin-bottom: 70px;
 }
 
 .table-width-text {
-    min-width: 450px;
+    min-width: 350px;
 }
 
 .table-width-qty {

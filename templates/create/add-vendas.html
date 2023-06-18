@@ -34,15 +34,28 @@
     </header>
 
     <main class="mt-2">
-
+        <!-- script file sig-vendas -->
         <form
-            action="https://script.google.com/macros/s/AKfycbyg-OH6xBQpbD3sEyCN6FZfva6MJlCR9mCrHfsB6x07dsQrEdxxqWZDtEDnWuP8C0cr/exec"
+            action="https://script.google.com/macros/s/AKfycbwi8HR3pNWIQ53RfBjdjRmu_1zqKOG5jc6AwYviJ_ZwcHbseGCeKUHUKWdyVROkJ0S5/exec"
             method="post" class="needs-validation" novalidate>
 
             <main class="card">
 
                 <header class="card-header text-center bg-success text-light">
-                    <h3 class="mt-2">Pedido de Vendas</h3>
+                    <section class="row mt-3">
+
+                        <div class="col-sm-9">
+                            <h3 class="">Vendas</h3>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Tipo</span>
+                                <select class="form-control" name="type_order" id="ListTypeOrder" autocomplete="off">
+                                </select>
+                            </div>
+                        </div>
+
+                    </section>
                 </header>
 
                 <div class="card-body">
@@ -57,6 +70,10 @@
                                 <datalist id="ListPartners">
 
                                 </datalist>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button"
+                                        onclick="ShowAllDataParceiros();"><i class="bi bi-search"></i></button>
+                                </div>
                                 <div class="invalid-tooltip">
                                     Por favor, coloque um nome de parceiro válido. Mínimo 4 caracteres.
                                 </div>
@@ -94,10 +111,18 @@
                                     Por favor, coloque um número válido.
                                 </div>
                             </div>
-                            <div class="input-group mb-3">
-                                <span class="input-group-text">Data</span>
-                                <input type="date" class="form-control text-center" name="inv_dt">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="input-group mb-3">
+                                        <input type="date" class="form-control text-center" name="inv_dt">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <select class="form-control status" name="status" autocomplete="off">
+                                    </select>
+                                </div>
                             </div>
+
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Vendedor</span>
                                 <input list="ListSellers" autocomplete="off" type="text" class="form-control"
@@ -118,8 +143,11 @@
                         <thead class="table-dark">
                             <tr>
                                 <th scope="col" class="text-center">Seq</th>
+                                <th scope="col" class="text-center">Busca</th>
                                 <th scope="col" class="text-center">Código</th>
                                 <th scope="col">Item</th>
+                                <th scope="col" class="text-center">Lote</th>
+                                <th scope="col" class="text-center">Val</th>
                                 <th scope="col" class="text-center">Qtd</th>
                                 <th scope="col" class="text-center">Pr Unit</th>
                                 <th scope="col" class="text-center">Total Item</th>
@@ -131,6 +159,12 @@
                         <tbody id="TBody">
                             <tr id="TRow" class="d-none">
                                 <th scope="row" class="text-center"></th>
+                                <td>
+                                    <div class="input-group-append">
+                                        <button class="btn btn-outline-secondary" type="button"
+                                            onclick="ShowAllDataParceiros();"><i class="bi bi-search"></i></button>
+                                    </div>
+                                </td>
                                 <td><input type="text" class="form-control text-center table-width-qty" name="code"
                                         autocomplete="off" required></td>
                                 <td>
@@ -146,6 +180,10 @@
                                     </datalist>
 
                                 </td>
+                                <td><input type="text" class="form-control text-center table-width-value" name="lot"
+                                        autocomplete="off" required></td>
+                                <td><input type="date" class="form-control text-center table-width-value"
+                                        name="validate" autocomplete="on" required></td>
                                 <td><input type="number" class="form-control text-right table-width-qty" name="qty"
                                         min="1" required onchange="Calc(this);">
                                     <p class="invalid-feedback">
@@ -153,7 +191,8 @@
                                     </p>
                                 </td>
                                 <td><input type="number" class="form-control text-right table-width-value" name="rate"
-                                        min="0.00" max="100.000.00" step="0.01" required onchange="Calc(this);">
+                                        min="0.00" max="100.000.00" step="0.01" autocomplete="off"
+                                        onchange="Calc(this);">
                                     <p class="invalid-feedback">
                                         Coloque um preço válido.
                                     </p>
@@ -178,12 +217,12 @@
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Acrescimo</span>
                                 <input type="number" class="form-control text-right" id="FGST" name="fgst" min="0.00"
-                                    max="10000.00" step="0.01" onchange="GetTotal()">
+                                    max="10.000.00" step="0.01" onchange="GetTotal()">
                             </div>
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Desconto</span>
                                 <input type="number" class="form-control text-right" id="FDiscount" name="fdiscount"
-                                    min="0.00" max="10000.00" step="0.01" onchange="GetTotal()">
+                                    min="0.00" max="10.000.00" step="0.01" onchange="GetTotal()">
                             </div>
                         </div>
 
@@ -200,21 +239,34 @@
 
                                 </datalist>
                             </div>
-                            <div class="input-group mb-3">
-                                <span class="input-group-text">Qtd Parc</span>
-                                <input type="number" class="form-control text-center" id="QtyParc" name="qtyparc"
-                                    min="1" step="1" value="1" required>
+                            <div class="row mt-3">
+
+                                <div class="col-sm-6">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text">Qtd Parc</span>
+                                        <input type="number" class="form-control text-center" id="QtyParc"
+                                            name="qtyparc" min="1" step="1" value="1" required>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="input-group mb-3">
+                                        <select class="form-control status_pgto" name="status_pgto" autocomplete="off">
+                                        </select>
+                                    </div>
+                                </div>
+
                             </div>
+
                         </div>
 
                         <div class="col-sm-4">
 
                             <div class="row text-center mt-3 mb-4">
                                 <div class="col-sm-6">
-                                    <button type="submit" class="btn btn-primary px-3 my-1">Save</button>
+                                    <button type="submit" class="btn btn-primary px-3 my-1">Salvar</button>
                                 </div>
                                 <div class="col-sm-6">
-                                    <a href="../../templates/create/add-vendas.html">
+                                    <a href="../../templates/read/list-vendas.html">
                                         <button type="button" class="btn btn-danger px-3 my-1">Cancelar
                                         </button>
                                     </a>
@@ -227,10 +279,9 @@
                                         onclick="GetPrint();">Imprimir</button>
                                 </div>
                                 <div class="col-sm-6">
-                                    <a href="../../templates/read/list-vendas.html">
-                                        <button type="button" class="btn px-2 my-1 btn-success">Lista Vendas
-                                        </button>
-                                    </a>
+                                    <button type="button" class="btn px-2 my-1 btn-success"
+                                        onclick="ShowAllDataVendas()">Lista Vendas
+                                    </button>
                                 </div>
                             </div>
 
@@ -245,8 +296,31 @@
 
     </main>
 
+    <section class="modal fade" id="modalListaVendas" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Lista Vendas</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body my-3">
+                    <table class="table table-sm table-responsive table-hover">
+                        <tbody id="TBodyAll">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <script type="text/javascript" src="../../static/js/scripts-add.js"></script>
-    
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
         integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
         crossorigin="anonymous"></script>

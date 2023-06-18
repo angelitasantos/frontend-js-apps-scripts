@@ -1,15 +1,22 @@
 $(document).ready(function () {
     //FormValidation();
-    SetCurrentDate();
     BtnAdd();
+    SetCurrentDate();
     FillDataListItems();
     FillDataListPartners();
     FillDataListSellers();
     FillDataListTypePay();
+    FillDataListStatus();
+    FillDataListTypeOrder();
+    FillDataListCategories();
+    FillDataListSubCategories();
+    FillDataListGroups();
+    FillDataListStatusPgto();
     MaxVendas();
 });
 
-const AppScriptGoogle = "AKfycbyn-uyuJjhiF5ZYstQ1Zrf4u5n-xAWMVQ_yUWjwOhKHPEsz7bvwUDHvCjt5BEVkHW3G";
+const AppScriptGoogle = "AKfycbzc5Wq-IyNfYRpX-2YUEGD82z43cDE4RULgX85R417xDlzLehChSlAO5SHoSlhiVQ68vg";
+// script file sig-data
 
 function FillDataListItems() {
     $.getJSON("https://script.google.com/macros/s/" + AppScriptGoogle + "/exec?page=dropdownItens",
@@ -52,6 +59,72 @@ function FillDataListTypePay() {
                 Options = Options + '<option>' + value + '</option>';
             });
             $("#ListTypePay").append(Options);
+        });
+}
+
+function FillDataListStatus() {
+    $.getJSON("https://script.google.com/macros/s/" + AppScriptGoogle + "/exec?page=dropdownStatus",
+        function (data) {
+            var Options = "";
+            $.each(data, function (key, value) {
+                Options = Options + '<option>' + value + '</option>';
+            });
+            $(".status").append(Options);
+        });
+}
+
+function FillDataListTypeOrder() {
+    $.getJSON("https://script.google.com/macros/s/" + AppScriptGoogle + "/exec?page=dropdownTipoPedido",
+        function (data) {
+            var Options = "";
+            $.each(data, function (key, value) {
+                Options = Options + '<option>' + value + '</option>';
+            });
+            $("#ListTypeOrder").append(Options);
+        });
+}
+
+function FillDataListCategories() {
+    $.getJSON("https://script.google.com/macros/s/" + AppScriptGoogle + "/exec?page=dropdownCategorias",
+        function (data) {
+            var Options = "";
+            $.each(data, function (key, value) {
+                Options = Options + '<option>' + value + '</option>';
+            });
+            $("#ListCategories").append(Options);
+        });
+}
+
+function FillDataListSubCategories() {
+    $.getJSON("https://script.google.com/macros/s/" + AppScriptGoogle + "/exec?page=dropdownSubCategorias",
+        function (data) {
+            var Options = "";
+            $.each(data, function (key, value) {
+                Options = Options + '<option>' + value + '</option>';
+            });
+            $("#ListSubCategories").append(Options);
+        });
+}
+
+function FillDataListGroups() {
+    $.getJSON("https://script.google.com/macros/s/" + AppScriptGoogle + "/exec?page=dropdownGrupos",
+        function (data) {
+            var Options = "";
+            $.each(data, function (key, value) {
+                Options = Options + '<option>' + value + '</option>';
+            });
+            $("#ListGroups").append(Options);
+        });
+}
+
+function FillDataListStatusPgto() {
+    $.getJSON("https://script.google.com/macros/s/" + AppScriptGoogle + "/exec?page=dropdownStatusPgto",
+        function (data) {
+            var Options = "";
+            $.each(data, function (key, value) {
+                Options = Options + '<option>' + value + '</option>';
+            });
+            $(".status_pgto").append(Options);
         });
 }
 
@@ -110,7 +183,7 @@ function Calc(v) {
     var rate = document.getElementsByName("rate")[index].value;
 
     var amt = qty * rate;
-    document.getElementsByName("amt")[index].value = amt;
+    document.getElementsByName("amt")[index].value = parseFloat(amt);
 
     GetTotal();
 }
@@ -133,8 +206,11 @@ function GetTotal() {
     document.getElementById("FNet").value = totalFormatado;
 }
 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const AppScriptGoogleVendas = "AKfycbyg-OH6xBQpbD3sEyCN6FZfva6MJlCR9mCrHfsB6x07dsQrEdxxqWZDtEDnWuP8C0cr";
+
+const AppScriptGoogleVendas = "AKfycbwi8HR3pNWIQ53RfBjdjRmu_1zqKOG5jc6AwYviJ_ZwcHbseGCeKUHUKWdyVROkJ0S5";
+// script file sig-vendas
 
 function MaxVendas() {
     $.getJSON("https://script.google.com/macros/s/" + AppScriptGoogleVendas + "/exec?page=max",
@@ -143,12 +219,14 @@ function MaxVendas() {
         });
 }
 
-function SearchVendas() {
+function SearchVendas(pNo = "") {
     var no = $('#inv_no').val();
+    if (pNo != "") no = pNo;
+
     $.getJSON("https://script.google.com/macros/s/" + AppScriptGoogleVendas + "/exec?page=search&no=" + no,
         function (data) {
             if (data == "NOT FOUND") {
-                alert('Number No. Not Found...');
+                alert('Número Não Encontrado!!!');
             }
             else {
                 var record = data.record;
@@ -163,25 +241,32 @@ function SearchVendas() {
                 var i = 0;
                 $.each(record, function (key, value) {
                     if (i == 0) {
-                        var dt = value[1].substring(0, 10);
+                        var dt = value[16].substring(0, 10);
+                        document.getElementsByName("inv_no")[0].value = value[0];
+                        document.getElementsByName("type_order")[0].value = value[1];
                         document.getElementsByName("inv_dt")[0].value = dt;
-                        document.getElementsByName("seller")[0].value = value[2];
-                        document.getElementsByName("partner")[0].value = value[3];
-                        document.getElementsByName("address")[0].value = value[4];
-                        document.getElementsByName("city")[0].value = value[5];
-                        document.getElementsByName("phone")[0].value = value[6];
-                        document.getElementsByName("fgst")[0].value = value[7];
-                        document.getElementsByName("fdiscount")[0].value = value[8];
-                        document.getElementsByName("typepay")[0].value = value[9];
-                        document.getElementsByName("qtyparc")[0].value = value[10];
+                        document.getElementsByName("status")[0].value = value[3];
+                        document.getElementsByName("partner")[0].value = value[4];
+                        document.getElementsByName("typepay")[0].value = value[8];
+                        document.getElementsByName("qtyparc")[0].value = value[9];
+                        document.getElementsByName("status_pgto")[0].value = value[10];
+                        document.getElementsByName("seller")[0].value = value[17];
+                        document.getElementsByName("phone")[0].value = value[18];
+                        document.getElementsByName("city")[0].value = value[19];
+                        document.getElementsByName("address")[0].value = value[20];
+                        document.getElementsByName("fgst")[0].value = value[21];
+                        document.getElementsByName("fdiscount")[0].value = value[22];
                     }
                     else {
                         if (i > 1) BtnAdd();
-                        document.getElementsByName("code")[i].value = value[11];
-                        document.getElementsByName("item_nm")[i].value = value[12];
-                        document.getElementsByName("qty")[i].value = value[13];
-                        document.getElementsByName("rate")[i].value = value[14];
-                        document.getElementsByName("amt")[i].value = value[15];
+                        var dtval = value[28].substring(0, 10);
+                        document.getElementsByName("code")[i].value = value[24];
+                        document.getElementsByName("item_nm")[i].value = value[25];
+                        document.getElementsByName("qty")[i].value = value[26];
+                        document.getElementsByName("lot")[i].value = value[27];
+                        document.getElementsByName("validate")[i].value = dtval;
+                        document.getElementsByName("rate")[i].value = value[29];
+                        document.getElementsByName("amt")[i].value = value[30];
                     }
                     i = i + 1;
                 });
@@ -189,4 +274,100 @@ function SearchVendas() {
                 GetTotal();
             }
         });
+
+    $('#modalListaVendas').modal('hide');
 }
+
+function ShowAllDataVendas() {
+
+    $(document).ready(function () {
+
+        $.getJSON("https://script.google.com/macros/s/" + AppScriptGoogleVendas + "/exec?page=all",
+            function (data) {
+
+                var Table = "", Rows = "", Columns = "";
+
+                $.each(data, function (key, value) {
+
+                    var InvNo = "";
+                    Columns = "";
+
+                    $.each(value, function (key1, value1) {
+
+                        Columns = Columns + '<td>' + value1 + '</td>';
+                        if (InvNo == "") InvNo = value1;
+
+                    });
+                    Rows = Rows + '<tr class="text-center" onclick="SearchVendas(' + InvNo + ')">' + Columns + '</tr>';
+                });
+
+                $("#TBodyAll").html(Rows);
+                $("#modalListaVendas").modal('show');
+
+            });
+    });
+
+}
+
+function ShowAllDataVendasGeral() {
+
+    $(document).ready(function () {
+
+        $.getJSON("https://script.google.com/macros/s/" + AppScriptGoogleVendas + "/exec?page=allGeral",
+            function (data) {
+
+                var Table = "", Rows = "", Columns = "";
+
+                $.each(data, function (key, value) {
+
+                    var InvNo = "";
+                    Columns = "";
+
+                    $.each(value, function (key1, value1) {
+
+                        Columns = Columns + '<td>' + value1 + '</td>';
+                        if (InvNo == "") InvNo = value1;
+
+                    });
+                    Rows = Rows + '<tr class="text-center">' + Columns + '</tr>';
+                });
+
+                $("#TBodyGeral").html(Rows);
+
+            });
+    });
+
+}
+
+function ShowAllDataVendasMargem() {
+
+    $(document).ready(function () {
+
+        $.getJSON("https://script.google.com/macros/s/" + AppScriptGoogleVendas + "/exec?page=allMargem",
+            function (data) {
+
+                var Table = "", Rows = "", Columns = "";
+
+                $.each(data, function (key, value) {
+
+                    var InvNo = "";
+                    Columns = "";
+
+                    $.each(value, function (key1, value1) {
+
+                        Columns = Columns + '<td>' + value1 + '</td>';
+                        if (InvNo == "") InvNo = value1;
+
+                    });
+                    Rows = Rows + '<tr class="text-center">' + Columns + '</tr>';
+                });
+
+                $("#TBodyMargem").html(Rows);
+
+            });
+    });
+
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+
