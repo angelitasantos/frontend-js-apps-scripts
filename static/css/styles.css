@@ -37,6 +37,23 @@
 
 @media print {
 
+    col.m01,
+    col.m02 {
+        visibility: collapse;
+    }
+
+    .table-width-text {
+        min-width: 240px;
+    }
+
+    .table-width-qty {
+        min-width: 70px;
+    }
+
+    .table-width-value {
+        min-width: 120px;
+    }
+
     .btn,
     .no-print {
         display: none;

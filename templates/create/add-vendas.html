@@ -45,7 +45,7 @@
                     <section class="row mt-3">
 
                         <div class="col-sm-9">
-                            <h3 class="">Vendas</h3>
+                            <h3 class="">VENDA</h3>
                         </div>
                         <div class="col-sm-3">
                             <div class="input-group mb-3">
@@ -61,6 +61,37 @@
                 <div class="card-body">
 
                     <section class="row">
+
+                        <div class="col-sm-4">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Número</span>
+                                <input type="text" class="form-control text-center" id="inv_no" name="inv_no"
+                                    autocomplete="off" required>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary" type="button" onclick="SearchVendas();"><i
+                                            class="bi bi-search"></i></button>
+                                </div>
+                                <div class="invalid-tooltip">
+                                    Por favor, coloque um número válido.
+                                </div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Data</span>
+                                <input type="date" class="form-control text-center" name="inv_dt">
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Status</span>
+                                <select class="form-control status" name="status" autocomplete="off">
+                                </select>
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Vendedor</span>
+                                <input list="ListSellers" autocomplete="off" type="text" class="form-control"
+                                    name="seller">
+                                <datalist id="ListSellers"></datalist>
+                            </div>
+                        </div>
 
                         <div class="col-sm-8">
                             <div class="input-group mb-3">
@@ -98,41 +129,6 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-4">
-                            <div class="input-group mb-3">
-                                <span class="input-group-text">Número</span>
-                                <input type="text" class="form-control text-center" id="inv_no" name="inv_no"
-                                    autocomplete="off" required>
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="button" onclick="SearchVendas();"><i
-                                            class="bi bi-search"></i></button>
-                                </div>
-                                <div class="invalid-tooltip">
-                                    Por favor, coloque um número válido.
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="input-group mb-3">
-                                        <input type="date" class="form-control text-center" name="inv_dt">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <select class="form-control status" name="status" autocomplete="off">
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="input-group mb-3">
-                                <span class="input-group-text">Vendedor</span>
-                                <input list="ListSellers" autocomplete="off" type="text" class="form-control"
-                                    name="seller">
-                                <datalist id="ListSellers">
-
-                                </datalist>
-                            </div>
-                        </div>
-
                     </section>
 
                     <input type="hidden" name="IsNew" id="IsNew" value="Y">
@@ -140,10 +136,20 @@
                     <input type="hidden" name="RowCount" id="RowCount" value="0">
 
                     <table class="table table-sm table-responsive-sm table-bordered">
+                        <col class=m01>
+                        <col class=m02>
+                        <col class=m03>
+                        <col class=m04>
+                        <col class=m05>
+                        <col class=m06>
+                        <col class=m07>
+                        <col class=m08>
+                        <col class=m09>
+                        <col class=m10>
                         <thead class="table-dark">
                             <tr>
                                 <th scope="col" class="text-center">Seq</th>
-                                <th scope="col" class="text-center">Busca</th>
+                                <th scope="col" class="text-center busca">Busca</th>
                                 <th scope="col" class="text-center">Código</th>
                                 <th scope="col">Item</th>
                                 <th scope="col" class="text-center">Lote</th>
@@ -161,24 +167,19 @@
                                 <th scope="row" class="text-center"></th>
                                 <td>
                                     <div class="input-group-append">
-                                        <button class="btn btn-outline-secondary" type="button"
+                                        <button class="btn btn-outline-secondary busca" type="button"
                                             onclick="ShowAllDataParceiros();"><i class="bi bi-search"></i></button>
                                     </div>
                                 </td>
                                 <td><input type="text" class="form-control text-center table-width-qty" name="code"
                                         autocomplete="off" required></td>
                                 <td>
-
                                     <input type="text" class="form-control table-width-text" name="item_nm"
                                         list="ListItems" autocomplete="off" required>
                                     <div class="invalid-feedback">
                                         Include 1 item
                                     </div>
-
-                                    <datalist id="ListItems">
-
-                                    </datalist>
-
+                                    <datalist id="ListItems"></datalist>
                                 </td>
                                 <td><input type="text" class="form-control text-center table-width-value" name="lot"
                                         autocomplete="off" required></td>
@@ -207,7 +208,7 @@
                         </tbody>
                     </table>
 
-                    <section class="row">
+                    <section class="row mb-5">
 
                         <div class="col-sm-4">
                             <div class="input-group mb-3">
@@ -224,13 +225,14 @@
                                 <input type="number" class="form-control text-right" id="FDiscount" name="fdiscount"
                                     min="0.00" max="10.000.00" step="0.01" onchange="GetTotal()">
                             </div>
-                        </div>
-
-                        <div class="col-sm-4">
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Total Geral</span>
                                 <input type="text" class="form-control text-center" id="FNet" name="fnet" disabled>
                             </div>
+                        </div>
+
+                        <div class="col-sm-4">
+
                             <div class="input-group mb-3">
                                 <span class="input-group-text">Tipo Pgto</span>
                                 <input list="ListTypePay" autocomplete="off" type="text"
@@ -239,22 +241,15 @@
 
                                 </datalist>
                             </div>
-                            <div class="row mt-3">
-
-                                <div class="col-sm-6">
-                                    <div class="input-group mb-3">
-                                        <span class="input-group-text">Qtd Parc</span>
-                                        <input type="number" class="form-control text-center" id="QtyParc"
-                                            name="qtyparc" min="1" step="1" value="1" required>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="input-group mb-3">
-                                        <select class="form-control status_pgto" name="status_pgto" autocomplete="off">
-                                        </select>
-                                    </div>
-                                </div>
-
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Qtd Parc</span>
+                                <input type="number" class="form-control text-center" id="QtyParc" name="qtyparc"
+                                    min="1" step="1" value="1" required>
+                            </div>
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Status</span>
+                                <select class="form-control status_pgto" name="status_pgto" autocomplete="off">
+                                </select>
                             </div>
 
                         </div>
