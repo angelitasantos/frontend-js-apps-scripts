@@ -160,7 +160,7 @@ function ShowAllDataRegistrosMargem() {
                         if (InvNo == "") InvNo = value1;
 
                     });
-                    Rows = Rows + '<tr class="text-center">' + Columns + '</tr>';
+                    Rows = Rows + '<tr class="text-center" onclick="SearchRegistros(' + InvNo + ')">' + Columns + '</tr>';
                 });
 
                 $("#TBody").html(Rows);

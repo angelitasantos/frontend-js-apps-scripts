@@ -18,6 +18,18 @@
     min-width: 120px;
 }
 
+.icon-home {
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    padding: 0.5rem;
+    border-radius: 10px;
+}
+
+.table {
+    font-size: 0.8rem;
+}
+
 @media screen and (max-width: 990px) {
     body {
         overflow-x: auto;
@@ -35,6 +47,7 @@
 
 .input-group-text {
     width: 100px;
+    height: calc(1.75rem + 2px);
 }
 
 #TRow>td .form-control {
